@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🦊 Fuxen Planung FS26</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fox-orange: #FF6B35;
+  --fox-dark: #C94A12;
+  --fox-light: #FFD4B8;
+  --fox-cream: #FFF8F0;
+  --fox-brown: #6B3A2A;
+  --tail-gold: #FFB347;
+  --ink: #2D1A0E;
+  --muted: #8B6355;
+  --card-bg: #FFFFFF;
+  --line: #FFE0CC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--fox-cream); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
+
+@keyframes foxBounce {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-18px) rotate(-5deg); }
+  50% { transform: translateY(-12px) rotate(4deg); }
+  80% { transform: translateY(-6px) rotate(-2deg); }
+}
+@keyframes tailSway {
+  0%,100% { transform: rotate(-28deg) skewX(-5deg); }
+  50% { transform: rotate(28deg) skewX(5deg); }
+}
+@keyframes earTwitch {
+  0%,75%,100% { transform: rotate(0deg); }
+  80% { transform: rotate(-18deg); }
+  88% { transform: rotate(12deg); }
+  94% { transform: rotate(-8deg); }
+}
+@keyframes eyeBlink {
+  0%,88%,100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.05); }
+}
+@keyframes noseSniff {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+@keyframes runFox {
+  0% { left: -100px; }
+  100% { left: calc(100% + 100px); }
+}
+@keyframes floatPaw {
+  0%,100% { transform: translateY(0) rotate(0deg); opacity:.06; }
+  50% { transform: translateY(-10px) rotate(15deg); opacity:.1; }
+}
+@keyframes headBob {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes popIn {
+  0% { transform: scale(0) rotate(-8deg); opacity:0; }
+  65% { transform: scale(1.12) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity:1; }
+}
+@keyframes cardSlide {
+  from { opacity:0; transform: translateX(-16px); }
+  to { opacity:1; transform: translateX(0); }
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-40px) rotate(0deg); opacity:1; }
+  100% { transform: translateY(110vh) rotate(900deg); opacity:0; }
+}
+@keyframes shimmerText {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes wobble {
+  0%,100% { transform: rotate(0deg); }
+  20% { transform: rotate(-6deg); }
+  40% { transform: rotate(5deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(2deg); }
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(150deg, #FF8C42 0%, #C94A12 100%);
+  padding: 32px 20px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 5px solid var(--fox-brown);
+}
+.header-bg { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.header-bg span { position:absolute; font-size:70px; opacity:.07; animation:floatPaw 4s ease-in-out infinite; }
+.header-fox {
+  width: 120px; height: 120px;
+  margin: 0 auto 14px;
+  animation: foxBounce 2.4s ease-in-out infinite;
+  position: relative;
+}
+.header-fox svg { width:100%; height:100%; }
+.header-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(28px, 8vw, 40px);
+  color: #fff;
+  text-shadow: 3px 3px 0 var(--fox-brown);
+  line-height: 1.15;
+}
+.header-title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #FFD700, #FFB347, #FF8C00, #FFD700);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 2s linear infinite;
+}
+.header-sub { color:rgba(255,255,255,.8); font-size:13px; font-weight:700; margin-top:6px; letter-spacing:.5px; }
+
+.jagged {
+  height: 28px; background: var(--fox-cream);
+  clip-path: polygon(0 100%,2% 0,4% 100%,6% 15%,8% 100%,10% 0,12% 100%,14% 20%,16% 100%,18% 5%,20% 100%,22% 0,24% 100%,26% 18%,28% 100%,30% 0,32% 100%,34% 22%,36% 100%,38% 0,40% 100%,42% 12%,44% 100%,46% 0,48% 100%,50% 8%,52% 100%,54% 0,56% 100%,58% 20%,60% 100%,62% 0,64% 100%,66% 14%,68% 100%,70% 0,72% 100%,74% 18%,76% 100%,78% 6%,80% 100%,82% 0,84% 100%,86% 22%,88% 100%,90% 0,92% 100%,94% 16%,96% 100%,98% 0,100% 100%);
+  margin-top: -1px;
+}
+.jagged-top { background: var(--fox-dark); }
+
+/* RUNNER */
+.runner { height:52px; background:#fff8f0; border-bottom:2px dashed var(--fox-light); position:relative; overflow:hidden; }
+.runner-ground { position:absolute; bottom:6px; left:0; right:0; height:2px; background:repeating-linear-gradient(90deg,var(--fox-light) 0,var(--fox-light) 16px,transparent 16px,transparent 26px); }
+.runner-fox { position:absolute; bottom:8px; font-size:32px; line-height:1; animation:runFox 6s linear infinite; }
+
+/* SELECTOR */
+.selector { padding:20px 16px 10px; }
+.selector-title { font-family:'Fredoka One',cursive; font-size:20px; color:var(--fox-dark); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.selector-title .bounce { animation:headBob 1.5s ease-in-out infinite; }
+.select-wrap { position:relative; }
+.select-wrap::before { content:'🦊'; position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:20px; pointer-events:none; z-index:2; }
+.select-wrap::after { content:'▼'; position:absolute; right:16px; top:50%; transform:translateY(-50%); color:var(--fox-dark); font-size:12px; pointer-events:none; }
+select#fuxPick {
+  width:100%; appearance:none;
+  background:#fff; border:3px solid var(--fox-orange); border-radius:20px;
+  padding:14px 44px 14px 48px;
+  font-family:'Nunito',sans-serif; font-size:16px; font-weight:800;
+  color:var(--fox-brown); cursor:pointer;
+  box-shadow:0 5px 0 var(--fox-dark);
+  transition:transform .12s,box-shadow .12s;
+}
+select#fuxPick:active { transform:translateY(3px); box-shadow:0 2px 0 var(--fox-dark); }
+select#fuxPick:focus { outline:none; }
+
+/* FUX PANEL */
+.fux-panel {
+  margin:14px 16px 0;
+  background:linear-gradient(135deg,#fff5eb,#ffe6d0);
+  border:3px solid var(--fox-orange); border-radius:22px;
+  padding:18px 16px 16px; display:none;
+  box-shadow:0 6px 0 var(--fox-dark);
+  animation:popIn .4s cubic-bezier(.175,.885,.32,1.275) both;
+}
+.fux-panel.show { display:block; }
+.panel-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.panel-avatar { width:58px; height:58px; border-radius:50%; background:var(--fox-orange); border:3px solid var(--fox-dark); display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 3px 0 var(--fox-brown); flex-shrink:0; animation:headBob 2s ease-in-out infinite; }
+.panel-name { font-family:'Fredoka One',cursive; font-size:22px; color:var(--fox-dark); }
+.panel-count { font-size:13px; font-weight:700; color:var(--muted); margin-top:2px; }
+.panel-events { display:flex; flex-direction:column; gap:9px; }
+.panel-ev { background:#fff; border-radius:14px; border:2px solid var(--fox-light); border-left:5px solid var(--fox-orange); padding:11px 13px; animation:cardSlide .3s ease both; }
+.panel-ev:nth-child(odd) { border-left-color:var(--fox-dark); }
+.panel-ev-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:5px; }
+.panel-ev-name { font-family:'Fredoka One',cursive; font-size:15px; color:var(--fox-dark); flex:1; line-height:1.2; }
+.panel-ev-date { background:var(--fox-orange); color:#fff; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+.panel-ev-meta { font-size:11px; color:var(--muted); font-weight:700; margin-bottom:5px; }
+.pills { display:flex; flex-wrap:wrap; gap:4px; }
+.pill { font-size:11px; font-weight:800; padding:3px 9px; border-radius:20px; border:1.5px solid; }
+.pv { background:#fff0e0; color:#b34d00; border-color:#ffb870; }
+.ps { background:#e8f5e9; color:#2e7d32; border-color:#81c784; }
+.pa { background:#e3f2fd; color:#1565c0; border-color:#90caf9; }
+.pp { background:#f3e5f5; color:#6a1b9a; border-color:#ce93d8; }
+.pc { background:#fce4ec; color:#880e4f; border-color:#f48fb1; }
+.panel-ev-comment { font-size:11px; color:var(--muted); font-style:italic; margin-top:6px; padding-top:6px; border-top:1px dashed var(--fox-light); }
+.no-tasks { text-align:center; padding:14px; color:var(--muted); font-weight:700; font-size:14px; }
+
+/* SECTION HEADER */
+.sec-head { display:flex; align-items:center; gap:10px; padding:22px 16px 8px; }
+.sec-head-text { font-family:'Fredoka One',cursive; font-size:20px; color:var(--fox-dark); }
+.sec-line { flex:1; height:2px; background:var(--fox-light); border-radius:2px; }
+.sec-paw { font-size:18px; animation:pulse 2s infinite; }
+
+.mo-label { font-family:'Fredoka One',cursive; font-size:13px; color:var(--fox-orange); letter-spacing:.15em; text-transform:uppercase; padding:14px 0 5px 4px; display:flex; align-items:center; gap:5px; }
+
+/* EVENT CARDS */
+.evlist { padding:0 16px 48px; display:flex; flex-direction:column; gap:9px; }
+.ev-card { background:#fff; border-radius:16px; border:2px solid var(--fox-light); overflow:hidden; box-shadow:0 3px 0 #f0d0b8; transition:transform .15s,box-shadow .15s; }
+.ev-card.past { opacity:.5; filter:grayscale(.4); }
+.ev-card.today { border:3px solid var(--fox-orange); box-shadow:0 5px 0 var(--fox-dark),0 0 0 5px rgba(255,107,53,.12); }
+.ev-card:active { transform:scale(.98); }
+
+.ev-top { display:flex; align-items:stretch; }
+.ev-date { background:var(--fox-orange); min-width:62px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:11px 6px; flex-shrink:0; }
+.ev-card.past .ev-date { background:#bbb; }
+.ev-card.today .ev-date { background:var(--fox-dark); }
+.ev-card.multi .ev-date { background:#9b2335; }
+.ev-day { font-family:'Fredoka One',cursive; font-size:27px; color:#fff; line-height:1; }
+.ev-mo { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.8); margin-top:1px; }
+.ev-time { font-size:9px; color:rgba(255,255,255,.6); margin-top:3px; font-weight:700; }
+.today-chip { background:var(--tail-gold); color:var(--fox-brown); font-size:8px; font-weight:800; padding:2px 5px; border-radius:20px; margin-top:3px; letter-spacing:.04em; animation:pulse 1.5s infinite; }
+
+.ev-body { flex:1; padding:11px 12px; min-width:0; }
+.ev-title { font-family:'Fredoka One',cursive; font-size:16px; color:var(--ink); line-height:1.2; margin-bottom:4px; }
+.ev-loc { display:inline-flex; align-items:center; gap:3px; font-size:11px; font-weight:700; color:var(--muted); background:#f5ede5; padding:2px 8px; border-radius:20px; margin-bottom:6px; }
+.ev-role-chips { display:flex; flex-wrap:wrap; gap:3px; }
+.ev-chip { font-size:10px; font-weight:800; padding:2px 7px; border-radius:20px; border:1.5px solid; }
+
+.ev-toggle { width:100%; background:none; border:none; border-top:2px dashed var(--fox-light); padding:7px 12px; font-family:'Nunito',sans-serif; font-size:11px; font-weight:800; color:var(--fox-orange); cursor:pointer; text-align:center; }
+.ev-toggle:active { background:var(--fox-cream); }
+
+.ev-detail { display:none; padding:10px 12px 12px; border-top:2px dashed var(--fox-light); }
+.ev-detail.open { display:block; }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.dbox { background:#fafafa; border:1.5px solid var(--fox-light); border-radius:10px; padding:7px 9px; }
+.dbox.full { grid-column:span 2; }
+.dbox-lbl { font-size:9px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+.dbox-val { font-size:12px; font-weight:700; color:var(--ink); line-height:1.35; }
+.dbox-val.empty { color:#ccc; font-size:15px; }
+.dbox-val.tbd { color:var(--muted); font-style:italic; font-size:11px; }
+.ev-comment { font-size:11px; color:var(--muted); font-style:italic; margin-top:7px; padding-top:6px; border-top:1px dashed var(--fox-light); }
+
+/* FOOTER */
+.footer { text-align:center; padding:24px 16px 48px; color:var(--muted); font-size:12px; font-weight:700; }
+.footer-fox-row { font-size:36px; animation:wobble 3s ease-in-out infinite; margin-bottom:8px; }
+.footer-stars { display:flex; justify-content:center; gap:6px; margin-bottom:8px; font-size:16px; }
+.footer-stars span { animation:floatPaw 2s ease-in-out infinite; }
+.footer-stars span:nth-child(2){animation-delay:.3s;}
+.footer-stars span:nth-child(3){animation-delay:.6s;}
+.footer-stars span:nth-child(4){animation-delay:.9s;}
+.footer-stars span:nth-child(5){animation-delay:1.2s;}
+
+.fdecor { position:fixed; pointer-events:none; z-index:0; font-size:28px; animation:floatPaw 5s ease-in-out infinite; }
+.fdecor:nth-child(1){top:18%;right:3%;animation-delay:0s;}
+.fdecor:nth-child(2){top:42%;left:2%;animation-delay:1.2s;}
+.fdecor:nth-child(3){top:68%;right:4%;animation-delay:2.5s;}
+.fdecor:nth-child(4){top:84%;left:3%;animation-delay:.7s;}
+
+.cfpiece { position:fixed; pointer-events:none; font-size:22px; z-index:999; animation:confettiFall 1.8s ease-in forwards; }
+</style>
+</head>
+<body>
+
+<div class="fdecor">🐾</div>
+<div class="fdecor">🦊</div>
+<div class="fdecor">🐾</div>
+<div class="fdecor">🦊</div>
+
+<header class="header">
+  <div class="header-bg">
+    <span style="top:-10px;left:-15px;animation-delay:0s">🐾</span>
+    <span style="top:10px;right:-10px;animation-delay:1s">🦊</span>
+    <span style="bottom:-20px;left:35%;animation-delay:2s">🐾</span>
+  </div>
+  <div class="header-fox">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <g style="transform-origin:18px 80px;animation:tailSway 1.3s ease-in-out infinite;">
+        <ellipse cx="20" cy="80" rx="19" ry="12" fill="#FF6B35" transform="rotate(-28 20 80)"/>
+        <ellipse cx="11" cy="91" rx="11" ry="7" fill="#fff" transform="rotate(-28 11 91)"/>
+      </g>
+      <ellipse cx="63" cy="76" rx="27" ry="22" fill="#FF6B35"/>
+      <ellipse cx="65" cy="80" rx="17" ry="14" fill="#FFD4B8"/>
+      <ellipse cx="48" cy="94" rx="9" ry="5.5" fill="#C94A12" transform="rotate(12 48 94)"/>
+      <ellipse cx="78" cy="94" rx="9" ry="5.5" fill="#C94A12" transform="rotate(-12 78 94)"/>
+      <ellipse cx="50" cy="98" rx="7" ry="4.5" fill="#C94A12"/>
+      <ellipse cx="74" cy="98" rx="7" ry="4.5" fill="#C94A12"/>
+      <ellipse cx="63" cy="57" rx="15" ry="11" fill="#FF6B35"/>
+      <ellipse cx="63" cy="42" rx="24" ry="22" fill="#FF6B35"/>
+      <ellipse cx="63" cy="47" rx="16" ry="14" fill="#FFD4B8"/>
+      <g style="transform-origin:44px 26px;animation:earTwitch 3.2s ease-in-out infinite;">
+        <polygon points="44,30 37,10 52,24" fill="#FF6B35"/>
+        <polygon points="44,28 40,14 51,23" fill="#C94A12"/>
+      </g>
+      <g style="transform-origin:82px 26px;animation:earTwitch 3.2s ease-in-out infinite 1.6s;">
+        <polygon points="82,30 89,10 74,24" fill="#FF6B35"/>
+        <polygon points="82,28 86,14 75,23" fill="#C94A12"/>
+      </g>
+      <g style="transform-origin:54px 40px;animation:eyeBlink 4.5s ease-in-out infinite;">
+        <ellipse cx="54" cy="40" rx="5.5" ry="6" fill="#2D1A0E"/>
+        <circle cx="56" cy="38" r="2.2" fill="white"/>
+      </g>
+      <g style="transform-origin:72px 40px;animation:eyeBlink 4.5s ease-in-out infinite 2.2s;">
+        <ellipse cx="72" cy="40" rx="5.5" ry="6" fill="#2D1A0E"/>
+        <circle cx="74" cy="38" r="2.2" fill="white"/>
+      </g>
+      <g style="transform-origin:63px 50px;animation:noseSniff 2.2s ease-in-out infinite;">
+        <ellipse cx="63" cy="50" rx="4.5" ry="3.5" fill="#2D1A0E"/>
+        <circle cx="62" cy="49" r="1.2" fill="rgba(255,255,255,.4)"/>
+      </g>
+      <path d="M56,55 Q63,61 70,55" fill="none" stroke="#2D1A0E" stroke-width="2.2" stroke-linecap="round"/>
+      <ellipse cx="47" cy="47" rx="5.5" ry="3.5" fill="#FF9A7A" opacity=".45"/>
+      <ellipse cx="79" cy="47" rx="5.5" ry="3.5" fill="#FF9A7A" opacity=".45"/>
+    </svg>
+  </div>
+  <h1 class="header-title">Fuxen Planung<br><em>FS26 🦊</em></h1>
+  <p class="header-sub">Zofingia St. Gallen · Frühjahrssemester 2026</p>
+</header>
+<div class="jagged jagged-top"></div>
+
+<div class="runner">
+  <div class="runner-ground"></div>
+  <div class="runner-fox">🦊</div>
+</div>
+
+<div class="selector">
+  <div class="selector-title"><span class="bounce">🐾</span> Welcher Fux bist du?</div>
+  <div class="select-wrap">
+    <select id="fuxPick" onchange="showFux()">
+      <option value="">— Fux auswählen —</option>
+      <option>ReActor</option>
+      <option>Goschdym</option>
+      <option>Tschong</option>
+      <option>Sonny</option>
+      <option>InnoZ!ent</option>
+      <option>SheRhe</option>
+      <option>Dies-das-AnanaZ!</option>
+      <option>Möses</option>
+      <option>Mèreci</option>
+      <option>San. Π</option>
+      <option>LeFleur</option>
+      <option>Fumber</option>
+      <option>Rigolo</option>
+      <option>Sihl</option>
+      <option>Felsli</option>
+      <option>fiXibus</option>
+      <option>Felix</option>
+      <option>Z!one</option>
+      <option>Gnüss-Linn</option>
+      <option>Notker</option>
+      <option>Kybelia</option>
+    </select>
+  </div>
+</div>
+
+<div class="fux-panel" id="fuxPanel">
+  <div class="panel-header">
+    <div class="panel-avatar">🦊</div>
+    <div>
+      <div class="panel-name" id="panelName">—</div>
+      <div class="panel-count" id="panelCount"></div>
+    </div>
+  </div>
+  <div class="panel-events" id="panelEvents"></div>
+</div>
+
+<div class="sec-head">
+  <span class="sec-paw">🐾</span>
+  <span class="sec-head-text">Alle Anlässe</span>
+  <div class="sec-line"></div>
+  <span class="sec-paw">🐾</span>
+</div>
+
+<div class="evlist" id="evlist"></div>
+
+<footer class="footer">
+  <div class="footer-fox-row">🦊</div>
+  <div class="footer-stars"><span>⭐</span><span>🐾</span><span>⭐</span><span>🐾</span><span>⭐</span></div>
+  Fuxen Planung FS26 · Zofingia St. Gallen<br>Vergangene Anlässe sind ausgegraut 🦊
+</footer>
+
+<script>
+const TODAY = new Date(2026,2,17);
+const MOS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const MOS_FULL = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+// Data synced exactly from sheet (row by row)
+const DATA = [
+  {t:'Eröffnungs-BC',       d:'2026-02-15',      time:'14:00 s.t.', ort:'Rüümli',
+   v:'ReActor', s:'ReActor', a:'', p:'', c:'', k:''},
+  {t:'Eröffnungs-AC',       d:'2026-02-15',      time:'15:00 c.t.', ort:'Rüümli',
+   v:'ReActor', s:'Goschdym, Tschong', a:'Goschdym', p:'', c:'', k:''},
+  {t:'Escape Room',          d:'2026-02-19',      time:'20:45 s.t.', ort:'tbd.',
+   v:'', s:'', a:'', p:'', c:'', k:''},
+  {t:'PhD Gradu',            d:'2026-02-20',      time:'15:00 s.t.', ort:'Uni (Audimax)',
+   v:'', s:'', a:'', p:'', c:'Z!ugtzwang (oder Vertretung), LeFleur, Dies-das-AnanaZ!', k:''},
+  {t:'Aufnahme AC (1)',      d:'2026-02-26',      time:'18:30 s.t.', ort:'Rüümli',
+   v:'Sonny', s:'Sonny', a:'Sonny', p:'', c:'', k:'Einfach zur Hilfe.'},
+  {t:'CC Sitzung',           d:'2026-02-27',      time:'14:00 s.t.', ort:'Rüümli',
+   v:'InnoZ!ent', s:'InnoZ!ent', a:'InnoZ!ent', p:'', c:'', k:''},
+  {t:'Aufnahme AC (2)',      d:'2026-02-27',      time:'18:30 s.t.', ort:'Rüümli',
+   v:'SheRhe', s:'SheRhe', a:'SheRhe', p:'', c:'', k:'Einfach zur Hilfe.'},
+  {t:'Vulgositzung (1)',     d:'2026-03-05',      time:'18:30 s.t.', ort:'Rüümli',
+   v:'Dies-das-AnanaZ!', s:'', a:'Tschong', p:'', c:'', k:'Einfach zur Hilfe.'},
+  {t:'Vulgositzung (2)',     d:'2026-03-06',      time:'18:30 s.t.', ort:'Rüümli',
+   v:'Goschdym', s:'', a:'Tschong', p:'', c:'', k:'Einfach zur Hilfe.'},
+  {t:'Fuxenstunde 1',        d:'2026-03-10',      time:'19:00 c.t.', ort:'Rüümli',
+   v:'', s:'', a:'', p:'', c:'', k:''},
+  {t:'Rüümli Putzen für Referat', d:'2026-03-11', time:'—', ort:'Rüümli',
+   v:'InnoZ!ent, Mèreci, San. Π', s:'InnoZ!ent, Mèreci, San. Π', a:'InnoZ!ent, Mèreci, San. Π', p:'', c:'', k:''},
+  {t:'Referat Axel Lehmann', d:'2026-03-12',      time:'20:00 c.t.', ort:'Rüümli',
+   v:'LeFleur', s:'Goschdym, Möses, Fumber', a:'LeFleur', p:'Sihl, Felsli, Goschdym', c:'', k:''},
+  {t:'Fuxenstunde 2',        d:'2026-03-17',      time:'19:00 c.t.', ort:'Rüümli',
+   v:'Dies-das-AnanaZ!', s:'Dies-das-AnanaZ!', a:'Dies-das-AnanaZ!', p:'Dies-das-AnanaZ!', c:'Dies-das-AnanaZ!', k:''},
+  {t:'Kreuzkommers Z!ZH',    d:'2026-03-19',      time:'19:00 s.t.', ort:'Bahnhof SG',
+   v:'', s:'(eventuell spontan)', a:'', p:'Dies-das-AnanaZ!, SheRhe, San. Π, Möses', c:'', k:''},
+  {t:'CCC-Anlass',           d:'2026-03-25',      time:'20:00 c.t.', ort:'Jakobstal',
+   v:'', s:'', a:'Fumber, Rigolo', p:'Stafetten-Team: Dies-das-AnanaZ!, Möses?, fiXibus?', c:'', k:''},
+  {t:'BA Gradu',             d:'2026-03-27',      time:'tbd.', ort:'Olma Messe',
+   v:'', s:'', a:'', p:'', c:'Z!ugtzwang, InnoZ!ent, Möses', k:''},
+  {t:'Fuxenstunde 3',        d:'2026-04-14',      time:'18:00 c.t.', ort:'Rüümli',
+   v:'', s:'', a:'', p:'', c:'', k:''},
+  {t:'Cantusstunde mit AZSG',d:'2026-04-17',      time:'tbd.', ort:'Rest. Hinterer Brand',
+   v:'', s:'', a:'', p:'Sonny, Fumber, Rigolo', c:'', k:''},
+  {t:'Dreifärber',           d:'2026-04-21',      time:'21:00 c.t.', ort:'Rüümli',
+   v:'Felix, Mèreci', s:'Notker und Kybelia Fuxen', a:'Möses, San. Π',
+   p:'Dies-das-AnanaZ!, ReActor (wenn da), Mèreci, Felix', c:'', k:''},
+  {t:'Fuxenstunde 4',        d:'2026-04-23',      time:'04:00 s.t.', ort:'Rüümli',
+   v:'San. Π', s:'', a:'San. Π', p:'', c:'', k:''},
+  {t:'Centralfest',          d:'2026-04-25', d2:'2026-04-27', time:'—', ort:'Zofingen',
+   v:'', s:'', a:'',
+   p:'LeFleur (Festversammlung), Goschdym (Sektionsessen), Tschong (Sektionsessen), Rigolo (Sektionsessen), Z!ugtzwang, Z!one, Gnüss-Linn, Dies-das-AnanaZ!, Sonny (tbd.) — Fuxenheft',
+   c:'Z!ugtzwang, Fumber, Felix', k:''},
+  {t:'Sportanlass',          d:'2026-04-30',      time:'tbd.', ort:'tbd.',
+   v:'', s:'', a:'', p:'', c:'', k:''},
+  {t:'Dies Academicus',      d:'2026-05-07',      time:'tbd.', ort:'Uni (Aula)',
+   v:'', s:'', a:'', p:'', c:'Z!ugtzwang, InnoZ!ent, Rigolo', k:''},
+  {t:'GFA',                  d:'2026-05-08', d2:'2026-05-09', time:'tbd.', ort:'tbd.',
+   v:'(tbd.)', s:'(tbd.)', a:'(tbd.)', p:'(tbd.)', c:'', k:''},
+  {t:'Weinwanderung',        d:'2026-05-14',      time:'tbd.', ort:'tbd.',
+   v:'(tbd.)', s:'(tbd.)', a:'Möses, Fumber', p:'SheRhe, Mèreci', c:'', k:''},
+  {t:'Schluss AC',           d:'2026-05-21',      time:'tbd.', ort:'Rüümli',
+   v:'(tbd.)', s:'(tbd.)', a:'(tbd.)', p:'(tbd.)', c:'', k:''},
+];
+
+function pd(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function isPast(e){return pd(e.d)<new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate());}
+function isToday(e){const d=pd(e.d);return d.getFullYear()===TODAY.getFullYear()&&d.getMonth()===TODAY.getMonth()&&d.getDate()===TODAY.getDate();}
+
+function getRoles(e,fux){
+  const f=fux.toLowerCase(),rs=[];
+  if(e.v&&e.v.toLowerCase().includes(f))rs.push({l:'Vorbereitung',c:'pv'});
+  if(e.s&&e.s.toLowerCase().includes(f))rs.push({l:'Stoffuxen',c:'ps'});
+  if(e.a&&e.a.toLowerCase().includes(f))rs.push({l:'Aufräumen',c:'pa'});
+  if(e.p&&e.p.toLowerCase().includes(f))rs.push({l:'Produktion',c:'pp'});
+  if(e.c&&e.c.toLowerCase().includes(f))rs.push({l:'Chargieren',c:'pc'});
+  return rs;
+}
+
+function fmtShort(e){
+  const d=pd(e.d);
+  if(e.d2){const e2=pd(e.d2);return d.getDate()+'–'+e2.getDate()+'. '+MOS[d.getMonth()];}
+  return d.getDate()+'. '+MOS[d.getMonth()];
+}
+function fmtDay(e){
+  const d=pd(e.d);
+  if(e.d2){const e2=pd(e.d2);return d.getDate()+'–'+e2.getDate();}
+  return d.getDate();
+}
+function dv(v){
+  if(!v)return '<span class="dbox-val empty">❌</span>';
+  if(v==='(tbd.)')return '<span class="dbox-val tbd">tbd.</span>';
+  return '<span class="dbox-val">'+v+'</span>';
+}
+
+function showFux(){
+  const fux=document.getElementById('fuxPick').value;
+  const panel=document.getElementById('fuxPanel');
+  if(!fux){panel.classList.remove('show');return;}
+  const mine=DATA.filter(e=>getRoles(e,fux).length>0);
+  document.getElementById('panelName').textContent=fux;
+  document.getElementById('panelCount').textContent=mine.length+' Anlässe mit Aufgaben 🦊';
+  if(mine.length===0){
+    document.getElementById('panelEvents').innerHTML='<div class="no-tasks">🦊 Keine Aufgaben — schön faul!</div>';
+  } else {
+    document.getElementById('panelEvents').innerHTML=mine.map((e,i)=>{
+      const roles=getRoles(e,fux);
+      const past=isPast(e);
+      return `<div class="panel-ev" style="animation-delay:${i*.07}s;opacity:${past?.55:1}">
+        <div class="panel-ev-top">
+          <div class="panel-ev-name">${e.t}</div>
+          <div class="panel-ev-date">${fmtShort(e)}</div>
+        </div>
+        <div class="panel-ev-meta">📍 ${e.ort} · ${e.time}</div>
+        <div class="pills">${roles.map(r=>`<span class="pill ${r.c}">${r.l}</span>`).join('')}</div>
+        ${e.k?`<div class="panel-ev-comment">💬 ${e.k}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+  panel.classList.remove('show');
+  void panel.offsetWidth;
+  panel.classList.add('show');
+  if(mine.length>0)boom();
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),200);
+}
+
+function boom(){
+  const emojis=['🦊','🐾','⭐','🧡','✨','🎉','🏅'];
+  for(let i=0;i<14;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='cfpiece';
+      el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left=Math.random()*100+'vw';
+      el.style.top='-40px';
+      el.style.animationDuration=(1.2+Math.random()*.8)+'s';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),2600);
+    },i*70);
+  }
+}
+
+function toggleDetail(btn){
+  const d=btn.nextElementSibling;
+  const open=d.classList.contains('open');
+  d.classList.toggle('open',!open);
+  btn.textContent=open?'Details ansehen 🦊 ▾':'Zuklappen 🦊 ▴';
+}
+
+(function build(){
+  const cont=document.getElementById('evlist');
+  let curMo=-1,html='';
+  DATA.forEach((e,i)=>{
+    const d=pd(e.d),mo=d.getMonth();
+    if(mo!==curMo){curMo=mo;html+=`<div class="mo-label">🦊 ${MOS_FULL[mo]} ${d.getFullYear()}</div>`;}
+    const past=isPast(e),today=isToday(e),multi=!!e.d2;
+    const cc=['ev-card',past?'past':'',today?'today':'',multi?'multi':''].filter(Boolean).join(' ');
+    const chips=[
+      e.v&&e.v!=='(tbd.)'?`<span class="ev-chip pv">Vorb.</span>`:'',
+      e.s&&e.s!=='(tbd.)'?`<span class="ev-chip ps">Stoff</span>`:'',
+      e.a&&e.a!=='(tbd.)'?`<span class="ev-chip pa">Aufr.</span>`:'',
+      e.p&&e.p!=='(tbd.)'?`<span class="ev-chip pp">Produ</span>`:'',
+      e.c&&e.c!=='(tbd.)'?`<span class="ev-chip pc">Charg.</span>`:'',
+    ].filter(Boolean).join('');
+    html+=`<div class="${cc}" style="animation-delay:${(i%8)*.05}s">
+      <div class="ev-top">
+        <div class="ev-date">
+          <div class="ev-day">${fmtDay(e)}</div>
+          <div class="ev-mo">${MOS[d.getMonth()]}</div>
+          <div class="ev-time">${e.time}</div>
+          ${today?'<div class="today-chip">HEUTE</div>':''}
+        </div>
+        <div class="ev-body">
+          <div class="ev-title">${e.t}</div>
+          <div class="ev-loc">📍 ${e.ort}</div>
+          <div class="ev-role-chips">${chips}</div>
+        </div>
+      </div>
+      <button class="ev-toggle" onclick="toggleDetail(this)">Details ansehen 🦊 ▾</button>
+      <div class="ev-detail">
+        <div class="detail-grid">
+          <div class="dbox"><div class="dbox-lbl">Vorbereitung</div>${dv(e.v)}</div>
+          <div class="dbox"><div class="dbox-lbl">Stoffuxen</div>${dv(e.s)}</div>
+          <div class="dbox"><div class="dbox-lbl">Aufräumen</div>${dv(e.a)}</div>
+          <div class="dbox"><div class="dbox-lbl">Produktion</div>${dv(e.p)}</div>
+          <div class="dbox full"><div class="dbox-lbl">Chargieren</div>${dv(e.c)}</div>
+        </div>
+        ${e.k?`<div class="ev-comment">💬 ${e.k}</div>`:''}
+      </div>
+    </div>`;
+  });
+  cont.innerHTML=html;
+})();
+</script>
+</body>
+</html>
